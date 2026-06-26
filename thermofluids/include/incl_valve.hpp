@@ -1,12 +1,13 @@
 #pragma once 
 
 class Valve {
-	public:
+	private:
 		/**
 		 * @brief Flow coefficient (kg/hr/sqrt(bar))
 		 */
 		double Kv;
 		
+	public:
 		/**
 		 * @brief Construct purely resistive (quasi-steady) valve object
 		 * @param flowCoefficient Kv flow coefficient of valve (kg/hr/sqrt(bar))

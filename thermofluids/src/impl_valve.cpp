@@ -10,6 +10,6 @@ Valve::Valve(double flowCoefficient) : Kv(flowCoefficient) {}
 double Valve::computeMassFlowRate(double pA, double pB) const {
 	
 	double dp = std::abs(pA-pB);
-	double sign = (pA > pB) ? 1.0 : -1.0;
+	double sign = (pA > pB) ? 1.0 : -1.0; 
 	return sign*(Kv/Units::HR_TO_S)*std::sqrt(dp*(FluidProperties::DENSITY_FLUID*FluidProperties::DENSITY_WATER));
 };

@@ -5,14 +5,14 @@ class CapacitiveVolume {
 	/**
 	 * @brief Hydraulic capacitance (kg/bar)
 	 */
-	double CHyd; 
+	double C; 
 	
 	public:
 	/**
 	 * @brief Construct capacitive fluid volume object
-	 * @param hydraulicCapacitance Ratio of fluid mass to bulk modulus (kg/bar)
+	 * @param capacitance Ratio of fluid mass to bulk modulus (kg/bar)
 	 */
-	CapacitiveVolume(double hydraulicCapacitance);
+	CapacitiveVolume(double capacitance);
 	 
 	/**
 	 * @brief Compute pressure state by integration
@@ -20,5 +20,5 @@ class CapacitiveVolume {
 	 * @param mdotB Mass inflow rate through port B (kg/s)
 	 * @param mdotC Mass inflow rate through port C (kg/s)
 	 */
-	double computePressureState(double mdotA, double mdotB, double mdotC) const;
+	double computePressureStateDerivative(double mdotA, double mdotB, double mdotC) const;
 };

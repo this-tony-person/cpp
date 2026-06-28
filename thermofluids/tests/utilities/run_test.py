@@ -1,8 +1,8 @@
-import sys
-import subprocess
-import pandas as pd
-import matplotlib.pyplot as plt
-import os
+import sys # To access CLI variables passed to Python interpreter
+import subprocess # To run C++ sim from Python code
+import pandas as pd # To handle sim output data files (e.g., CSV)
+import matplotlib.pyplot as plt # To plot simulation data
+import os # To access file paths and names (e.g., for plot titles)
 
 def run_test(cpp_executable):
 	# Construct CSV output file name
@@ -13,19 +13,32 @@ def run_test(cpp_executable):
 	print(f"Running: {cpp_executable}")
 	subprocess.run([cpp_executable], check=True)
 	
-	# Plot sim results
-	data_file = pd.read_csv(csv_output)
-	x_col = data_file.columns[0]
+	# Load sim data
+	df = pd.read_csv(csv_output)
 	
-	plt.figure(figsize=(10,6))
-	for col in data_file.columns[1:]:
-		plt.plot(data_file[x_col], data_file[col], label=col, marker='.', markersize=2)
-		
-	plt.title(f"{exe_name}")
-	plt.xlabel(x_col)
-	plt.ylabel("Value")
-	plt.legend()
-	plt.grid(True)
+	# Create figure with two subplots
+	fig, (ax1,ax2) = plt.subplots(2,1,figsize=(10,8),sharex=True)
+	
+	# Subplot 1: pressures
+	ax1.plot(df['Time'],df['pJunction'],label='Junction Pressure')
+	ax1.plot(df['Time'],df['pBC1'],'--',label='Pressure BC 1')
+	ax1.plot(df['Time'],df['pBC2'],'--',label='Pressure BC 2')
+	ax1.set_xlabel('Time (s)')
+	ax1.set_ylabel('Pressure (bar)')
+	ax1.legend()
+	ax1.grid(True)
+	
+	# Subplot 2: mass flow rates
+	ax2.plot(df['Time'],df['mdotA'],label='Port A mass inflow rate')
+	ax2.plot(df['Time'],df['mdotB'],label='Port B mass inflow rate')
+	ax2.plot(df['Time'],df['mdotC'],label='Port C mass inflow rate')
+	ax2.set_xlabel('Time (s)')
+	ax2.set_ylabel('Mass Flow Rate (kg/s)')
+	ax2.legend()
+	ax2.grid(True)
+	
+	# Show plot
+	plt.tight_layout()
 	plt.show()
 
 if __name__ == "__main__":

@@ -9,6 +9,7 @@ title = os.path.basename(filename)
 datafile = pd.read_csv(filename)
 x_col = datafile.columns[0]
 
+plt.figure(figsize=(10,6))
 for col in datafile.columns[1:]:
 	plt.plot(datafile[x_col],datafile[col], label=col)
 	

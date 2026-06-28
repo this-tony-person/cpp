@@ -1,18 +1,20 @@
 #pragma once
+#include "lox_plant_params.hpp"
 #include "incl_capacitive_volume.hpp"
 #include "incl_pipe.hpp"
 #include <vector>
+#include <map>
+#include <string>
 
 class LOxPlant {
 private:
 	// Component objects
-	Pipe PO0001;
-	Pipe PO0002;
-	CapacitiveVolume J1;
+	std::map<std::string, Pipe> pipes;
+  std::map<std::string, CapacitiveVolume> volumes;
 	
 public:
 	// Constructor
-	LOxPlant();
+	explicit LOxPlant(const LOxPlantParams& params);
 	
 	// Plant boundary conditions
 	const double pBC1;

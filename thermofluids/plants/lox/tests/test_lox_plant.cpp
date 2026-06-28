@@ -1,14 +1,19 @@
 #include "LOxPlant.hpp"
+#include "lox_plant_loader.hpp"
 #include <boost/numeric/odeint.hpp>
 #include <iostream>
 #include <fstream>
 
 int main() {
+	// Load plant parameters
+	LOxPlantParams params = LOxPlantLoader::load("./plants/lox/data/pipe_params.csv", "./plants/lox/data/volume_params.csv");
+
 	// Instantiate plant model
-	LOxPlant lox;
+	LOxPlant lox(params);
 	
 	// Initialize differential states
 	double pJ1 = 1.0;
+	double pJ2 = 1.0;
 	std::vector<double> p = lox.getInitialState(pJ1);
 	
 	// Configure ODE solver

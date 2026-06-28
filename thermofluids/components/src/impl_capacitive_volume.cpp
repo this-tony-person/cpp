@@ -1,5 +1,9 @@
 #include "incl_capacitive_volume.hpp"
 
+/**
+ * @brief Component class for purely capacitive fluid volumes with hydraulic capacitance parameterization
+ */
+
 // Constructor
 CapacitiveVolume::CapacitiveVolume(double capacitance) : C(capacitance) {}
 		

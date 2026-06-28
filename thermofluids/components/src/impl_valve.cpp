@@ -3,6 +3,10 @@
 #include "common/units.hpp"
 #include <cmath>
 
+/**
+ * @brief Component class for purely resistive valves with Kv flow coefficient parameterization
+ */
+
 // Constructor
 Valve::Valve(double flowCoefficient) : Kv(flowCoefficient) {}
 

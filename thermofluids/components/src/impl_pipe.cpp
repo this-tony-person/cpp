@@ -3,6 +3,10 @@
 #include "common/units.hpp"
 #include <cmath>
 
+/**
+ * @brief Component class for purely resistive pipes with lumped pressure loss coefficient parameterization
+ */
+
 // Constructor
 Pipe::Pipe(double lossCoefficient) : KLoss(lossCoefficient) {}
 

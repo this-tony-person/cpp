@@ -11,25 +11,25 @@ int main() {
 	double KLoss2 = 10; // Pipe pressure loss coefficient (1)
 	double C1 = 1; // Hydraulic capacitance (kg/bar)
 	
+		// Component object definitions
+	Pipe PO0001(KLoss1); 
+	Pipe PO0002(KLoss2);
+	CapacitiveVolume J1(C1);
+	
 	// Plant boundary conditions
 	double pBC1 = 3; // Pressure boundary condition 1 (bar)
 	double pBC2 = 1; // Pressure boundary condition 2 (bar)
 	
 	// Plant initial states
 	double pJ1 = 1; // Pressure at capacitive volume J1 (bar)
-	double mdotA = 0; // Mass inflow rate through port A (kg/s)
-	double mdotB = 0; // Mass inflow rate through port B (kg/s)
+	double mdotA = PO0001.computeMassFlowRate(pBC1,pJ1); // Mass inflow rate through port A (kg/s)
+	double mdotB = PO0001.computeMassFlowRate(pBC2,pJ1); // Mass inflow rate through port B (kg/s)
 	double mdotC = 0; // Mass inflow rate through port C (kg/s)
 	
 	// Solver parameterization
 	double tStart = 0; // Simulation start time (s)
 	double tStop = 10.0; // Simulation stop time (s)
 	double dt = 0.01; // Simulation time step size (s)
-	
-	// Component object definitions
-	Pipe PO0001(KLoss1); 
-	Pipe PO0002(KLoss2);
-	CapacitiveVolume J1(C1);
 	
 	// Plant assembly definition
 	auto plant = [&](const std::vector<double> &x, std::vector<double> &dxdt, double t) {

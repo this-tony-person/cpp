@@ -24,6 +24,5 @@ public:
 	void computeStateDerivatives(const std::vector<double>& x, std::vector<double>& dxdt, double t);
 	
 	// Helper methods
-	double getMdotA(double p);
-	double getMdotB(double p);
-};
+	double getPipeMdot(const std::string& pipeName, double p1, double p2);
+	};

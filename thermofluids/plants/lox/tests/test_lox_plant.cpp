@@ -29,8 +29,8 @@ int main() {
 	// Execute integration loop
 	while (t<tStop) {
 		// Get mass flow rates
-		double mdotA = lox.getMdotA(p[0]);
-		double mdotB = lox.getMdotB(p[0]);
+		double mdotA = lox.getPipeMdot("PO0001",lox.pBC1,p[0]);
+		double mdotB = lox.getPipeMdot("PO0002",lox.pBC2,p[0]);
 		double mdotC = 0.0;
 		
 		// Log current state

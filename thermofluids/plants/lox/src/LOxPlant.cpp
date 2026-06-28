@@ -39,10 +39,6 @@ void LOxPlant::computeStateDerivatives(const std::vector<double>& x, std::vector
 	dxdt[0] = volumes.at("J1").computePressureStateDerivative(mdotA,mdotB,mdotC);
 }
 
-std::vector<double> LOxPlant::getInitialState(double pJ1) {
-	return {pJ1};
-}
-
 double LOxPlant::getMdotA(double p) {
 	return pipes.at("PO0001").computeMassFlowRate(pBC1,p);
 }

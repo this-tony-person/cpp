@@ -13,8 +13,7 @@ int main() {
 	
 	// Initialize differential states
 	double pJ1 = 1.0;
-	double pJ2 = 1.0;
-	std::vector<double> p = lox.getInitialState(pJ1);
+	std::vector<double> p = {pJ1};
 	
 	// Configure ODE solver
 	double t = 0.0;

@@ -24,7 +24,6 @@ public:
 	void computeStateDerivatives(const std::vector<double>& x, std::vector<double>& dxdt, double t);
 	
 	// Helper methods
-	std::vector<double> getInitialState(double pJ1);
 	double getMdotA(double p);
 	double getMdotB(double p);
 };

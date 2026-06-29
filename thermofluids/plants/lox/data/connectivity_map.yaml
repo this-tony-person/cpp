@@ -5,7 +5,6 @@ connections:
  J1:
   A: { name: "PO0001", port: "B" }
   B: { name: "PO0002", port: "A" }
-  C: {}
  PO0002:
   A: { name: "J1", port: "B" }
   B: { name: "BC2", port: "A" }

@@ -25,17 +25,30 @@ int main() {
 	
 	// Configure I/O logging
 	std::ofstream outfile("output_test_lox_plant.csv");
-	outfile << "Time,pJunction,pBC1,pBC2,mdotA,mdotB,mdotC\n";
+	outfile << "Time,pJunction,pBC1,pBC2";
+	for (const auto& [name,pipe] : lox.pipes) {
+		outfile << "," << "mdot_" << name;
+	}
+	outfile << "\n";
+	
+	// Get connectivity data
+	const auto& j1_connections = lox.getConnectivity().at("J1");
 	
 	// Execute integration loop
 	while (t<tStop) {
+	
 		// Get mass flow rates
-		double mdotA = lox.getPipeMdot("PO0001",lox.pBC1,p[0]);
-		double mdotB = lox.getPipeMdot("PO0002",lox.pBC2,p[0]);
+		double mdotA = lox.getPipeMdot(j1_connections.at("A").name,lox.pBC1,p[0]);
+		double mdotB = lox.getPipeMdot(j1_connections.at("B").name,lox.pBC2,p[0]);
 		double mdotC = 0.0;
 		
 		// Log current state
-		outfile << t << "," << p[0] << "," << lox.pBC1 << "," << lox.pBC2 << "," << mdotA << "," << mdotB << "," << mdotC << "\n";
+		outfile << t << "," << p[0] << "," << lox.pBC1 << "," << lox.pBC2;
+		for (const auto& [name, pipe] : lox.pipes) {
+			double mdot = pipe.computeMassFlowRate(name,p[0]);
+			outfile << "," << mdot;
+		}
+		outfile << "\n";
 		
 		// Integrate state derivatives
 		stepper.do_step([&](const std::vector<double>& x, std::vector<double>& dxdt, double t) {

@@ -25,10 +25,10 @@ LOxPlant::LOxPlant(const LOxPlantParams& params, const std::string& connectivity
     for (const auto& [name, v_params] : params.volumeRegistry) {
         volumes.emplace(name, CapacitiveVolume(v_params.CHyd));
     }
+    
+    // Initialize plant topology
+		this->connectivity = ConnectivityLoader::loadFromFile(connectivityFilePath);
 }
-
-		// Initialize plant topology
-		this->connectivity = ConnectivityLoader::loadFromFile(configPath);
 
 void LOxPlant::computeStateDerivatives(const std::vector<double>& x, std::vector<double>& dxdt, double t) {
 	// Get junction pressure state
@@ -38,8 +38,8 @@ void LOxPlant::computeStateDerivatives(const std::vector<double>& x, std::vector
 	auto& j1_neighbors = connectivity.at("J1");
 	
 	// Update mass flow rates
-	double mdotA = pipes.at(j1_neighbors.at("A")).computeMassFlowRate(pBC1,p);
-	double mdotB = pipes.at(j1_neighbors.at("B")).computeMassFlowRate(pBC2,p);
+	double mdotA = pipes.at(j1_neighbors.at("A").name).computeMassFlowRate(pBC1,p);
+	double mdotB = pipes.at(j1_neighbors.at("B").name).computeMassFlowRate(pBC2,p);
 	double mdotC = 0.0;
 	
 	// Update junction pressure state derivative

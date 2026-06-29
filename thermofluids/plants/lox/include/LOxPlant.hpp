@@ -27,4 +27,6 @@ public:
 	
 	// Helper methods
 	double getPipeMdot(const std::string& pipeName, double p1, double p2);
+	const ConnectivityMap& getConnectivity() const { return connectivity; }
+	const std::map<std::string, Pipe>& getPipes() const { return pipes; }
 	};

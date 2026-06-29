@@ -1,5 +1,6 @@
 #pragma once
 #include "lox_plant_params.hpp"
+#include "connectivity_type.hpp"
 #include "incl_capacitive_volume.hpp"
 #include "incl_pipe.hpp"
 #include <vector>

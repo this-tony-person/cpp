@@ -12,10 +12,11 @@ private:
 	// Component objects
 	std::map<std::string, Pipe> pipes;
   std::map<std::string, CapacitiveVolume> volumes;
+	ConnectivityMap connectivity;
 	
 public:
 	// Constructor
-	explicit LOxPlant(const LOxPlantParams& params);
+	explicit LOxPlant(const LOxPlantParams& params, const std::string& connectivityFilePath);
 	
 	// Plant boundary conditions
 	const double pBC1;

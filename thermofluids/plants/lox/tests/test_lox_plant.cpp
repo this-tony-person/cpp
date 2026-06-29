@@ -9,7 +9,8 @@ int main() {
 	LOxPlantParams params = LOxPlantLoader::load("./plants/lox/data/pipe_params.csv", "./plants/lox/data/volume_params.csv");
 
 	// Instantiate plant model
-	LOxPlant lox(params);
+	std::string connectivityFilePath = "./plants/lox/data/connectivity_map.yaml";
+	LOxPlant lox(params,connectivityFilePath);
 	
 	// Initialize differential states
 	double pJ1 = 1.0;

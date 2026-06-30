@@ -4,8 +4,7 @@
 #include <iostream>
 
 // Constructor
-LOxPlant::LOxPlant(const LOxPlantParams& params, const std::string& connectivityFilePath) : pBC1(3.0),
-	pBC2(1.0) {
+LOxPlant::LOxPlant(const LOxPlantParams& params, const std::string& connectivityFilePath) {
     // 1. Convert PipeParams to active Pipe objects
     std::cout << "DEBUG: Pipes loaded:" << std::endl;
     for (const auto& [name, p_params] : params.pipeRegistry) {
@@ -23,7 +22,7 @@ LOxPlant::LOxPlant(const LOxPlantParams& params, const std::string& connectivity
     }
     
     for (const auto& [name, v_params] : params.volumeRegistry) {
-        volumes.emplace(name, CapacitiveVolume(v_params.CHyd));
+      volumes.emplace(name, CapacitiveVolume(v_params.CHyd));
     }
     
     // Initialize plant topology
@@ -32,14 +31,14 @@ LOxPlant::LOxPlant(const LOxPlantParams& params, const std::string& connectivity
 
 void LOxPlant::computeStateDerivatives(const std::vector<double>& x, std::vector<double>& dxdt, double t) {
 	// Get junction pressure state
-	double p = x[0];
+	volumes.at("J1").pressure = x[0];
 	
 	// Get junction port connections
 	auto& j1_neighbors = connectivity.at("J1");
 	
 	// Update mass flow rates
-	double mdotA = pipes.at(j1_neighbors.at("A").name).computeMassFlowRate(pBC1,p);
-	double mdotB = pipes.at(j1_neighbors.at("B").name).computeMassFlowRate(pBC2,p);
+	double mdotA = pipes.at(j1_neighbors.at("A").name).computeMassFlowRate(boundaries.at("BC1").pressure,volumes.at("J1").pressure);
+	double mdotB = pipes.at(j1_neighbors.at("B").name).computeMassFlowRate(boundaries.at("BC2").pressure,volumes.at("J1").pressure);
 	double mdotC = 0.0;
 	
 	// Update junction pressure state derivative

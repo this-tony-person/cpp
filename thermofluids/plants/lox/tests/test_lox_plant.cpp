@@ -4,6 +4,17 @@
 #include <iostream>
 #include <fstream>
 
+// Add 'const LOxPlant& lox' as the first argument
+double getPressure(const LOxPlant& lox, const std::string& name) {
+    if (lox.volumes.count(name)) {
+        return lox.volumes.at(name).pressure;
+    } 
+    if (lox.boundaries.count(name)) {
+        return lox.boundaries.at(name).pressure;
+    }
+    throw std::runtime_error("Component '" + name + "' not found in volumes or boundaries!");
+}
+
 int main() {
 	// Load plant parameters
 	LOxPlantParams params = LOxPlantLoader::load("./plants/lox/data/pipe_params.csv", "./plants/lox/data/volume_params.csv");
@@ -12,9 +23,13 @@ int main() {
 	std::string connectivityFilePath = "./plants/lox/data/connectivity_map.yaml";
 	LOxPlant lox(params,connectivityFilePath);
 	
+	// Temporary boundary condition parameters
+	lox.boundaries["BC1"].pressure = 3.0;
+	lox.boundaries["BC2"].pressure = 1.0;
+	
 	// Initialize differential states
-	double pJ1 = 1.0;
-	std::vector<double> p = {pJ1};
+	lox.volumes.at("J1").pressure = 1.0; // Pressure state (bar)
+	std::vector<double> p = {lox.volumes.at("J1").pressure};
 	
 	// Configure ODE solver
 	double t = 0.0;
@@ -32,20 +47,24 @@ int main() {
 	outfile << "\n";
 	
 	// Get connectivity data
-	const auto& j1_connections = lox.getConnectivity().at("J1");
+	const auto& PO0001_connections = lox.getConnectivity().at("PO0001");
+	const auto& PO0002_connections = lox.getConnectivity().at("PO0002");
+	//const auto& j1_connections = lox.getConnectivity().at("J1");
 	
 	// Execute integration loop
 	while (t<tStop) {
-	
-		// Get mass flow rates
-		double mdotA = lox.getPipeMdot(j1_connections.at("A").name,lox.pBC1,p[0]);
-		double mdotB = lox.getPipeMdot(j1_connections.at("B").name,lox.pBC2,p[0]);
-		double mdotC = 0.0;
 		
 		// Log current state
-		outfile << t << "," << p[0] << "," << lox.pBC1 << "," << lox.pBC2;
+		outfile << t << "," << p[0] << "," << lox.boundaries.at("BC1").pressure << "," << lox.boundaries.at("BC2").pressure;
 		for (const auto& [name, pipe] : lox.pipes) {
-			double mdot = pipe.computeMassFlowRate(name,p[0]);
+			const auto& pipeConnections = lox.getConnectivity().at(name); // Pipe connections	
+					
+			std::string connA = pipeConnections.at("A").name; // Port-A neighbor
+			std::cout << "Conn A" << connA << std::endl;
+			std::string connB = pipeConnections.at("B").name; // port-B neighbor
+			std::cout << "Conn B" << connB << std::endl;
+			
+			double mdot = lox.getPipeMdot(name,getPressure(lox,connA),getPressure(lox,connB));
 			outfile << "," << mdot;
 		}
 		outfile << "\n";

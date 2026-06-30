@@ -8,6 +8,9 @@ class CapacitiveVolume {
 	double C; 
 	
 	public:
+	double pressure; // Internal pressure state (bar)
+	double pressureDerivative; // Internal pressure state derivative (bar/s)
+	
 	/**
 	 * @brief Construct capacitive fluid volume object
 	 * @param capacitance Ratio of fluid mass to bulk modulus (kg/bar)

@@ -29,9 +29,8 @@ def run_test(cpp_executable):
 	ax1.grid(True)
 	
 	# Subplot 2: mass flow rates
-	ax2.plot(df['Time'],df['mdotA'],label='Port A mass inflow rate')
-	ax2.plot(df['Time'],df['mdotB'],label='Port B mass inflow rate')
-	ax2.plot(df['Time'],df['mdotC'],label='Port C mass inflow rate')
+	ax2.plot(df['Time'],df['mdot_PO0001'],label='Port A mass inflow rate')
+	ax2.plot(df['Time'],df['mdot_PO0002'],label='Port B mass outflow rate')
 	ax2.set_xlabel('Time (s)')
 	ax2.set_ylabel('Mass Flow Rate (kg/s)')
 	ax2.legend()

@@ -9,6 +9,7 @@ LOxPlantParams LOxPlantLoader::load(const std::string& pipePath, const std::stri
 	// Append component registries
 	params.pipeRegistry = PipeLoader::load(pipePath);
 	params.volumeRegistry = VolumeLoader::load(volumePath);
+	//params.boundaryRegistry = 
 	
 	return params;
 };

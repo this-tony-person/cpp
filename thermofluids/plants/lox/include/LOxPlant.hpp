@@ -3,24 +3,24 @@
 #include "connectivity_type.hpp"
 #include "incl_capacitive_volume.hpp"
 #include "incl_pipe.hpp"
+#include "boundary_condition.hpp"
 #include <vector>
 #include <map>
 #include <string>
 
 class LOxPlant {
 private:
-	// Component objects
-	std::map<std::string, Pipe> pipes;
-  std::map<std::string, CapacitiveVolume> volumes;
+	// Connectivity map
 	ConnectivityMap connectivity;
 	
 public:
+	// Component objects
+	std::map<std::string, Pipe> pipes;
+  std::map<std::string, CapacitiveVolume> volumes;
+	std::map<std::string, BoundaryCondition> boundaries;
+
 	// Constructor
 	explicit LOxPlant(const LOxPlantParams& params, const std::string& connectivityFilePath);
-	
-	// Plant boundary conditions
-	const double pBC1;
-	const double pBC2;
 	
 	// Core simulation methods
 	void computeStateDerivatives(const std::vector<double>& x, std::vector<double>& dxdt, double t);

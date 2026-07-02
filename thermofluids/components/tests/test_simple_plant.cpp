@@ -1,6 +1,6 @@
-#include "incl_capacitive_volume.hpp"
-#include "incl_valve.hpp"
-#include "incl_pipe.hpp"
+#include "volume.hpp"
+#include "valve.hpp"
+#include "pipe.hpp"
 #include <vector>
 #include <boost/numeric/odeint.hpp>
 #include <fstream>

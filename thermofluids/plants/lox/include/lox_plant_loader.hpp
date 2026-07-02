@@ -4,5 +4,5 @@
 
 class LOxPlantLoader {
 public:
-	static LOxPlantParams load(const std::string& pipePath, const std::string& volumePath);
+	static LOxPlantParams load(const std::string& pipePath, const std::string& volumePath, const std::string& boundaryPath);
 };

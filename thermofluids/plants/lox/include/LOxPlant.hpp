@@ -1,9 +1,9 @@
 #pragma once
 #include "lox_plant_params.hpp"
 #include "connectivity_type.hpp"
-#include "incl_capacitive_volume.hpp"
-#include "incl_pipe.hpp"
-#include "boundary_condition.hpp"
+#include "volume.hpp"
+#include "pipe.hpp"
+#include "boundary.hpp"
 #include <vector>
 #include <map>
 #include <string>
@@ -26,6 +26,7 @@ public:
 	void computeStateDerivatives(const std::vector<double>& x, std::vector<double>& dxdt, double t);
 	
 	// Helper methods
+	double getPressure(const std::string& name) const;
 	double getPipeMdot(const std::string& pipeName, double p1, double p2);
 	const ConnectivityMap& getConnectivity() const { return connectivity; }
 	const std::map<std::string, Pipe>& getPipes() const { return pipes; }

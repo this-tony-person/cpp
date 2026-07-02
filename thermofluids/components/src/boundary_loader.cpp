@@ -21,12 +21,12 @@ std::map<std::string, BoundaryParams> BoundaryLoader::load(const std::string& fi
 	while (std::getline(file,line)) {
 		// Turn line into stream for parsing
 		std::stringstream ss(line);
-		std::string name, kLoss;
+		std::string name, pressure;
 		
 		// Extract fields separated by comma
-		if (std::getline(ss,name,',') && std::getline(ss,kLoss)) {
-			// Convert kLoss to double
-			registry[name] = {std::stod(kLoss)};
+		if (std::getline(ss,name,',') && std::getline(ss,pressure)) {
+			// Convert pressure to double
+			registry[name] = {std::stod(pressure)};
 		}
 	}
 	

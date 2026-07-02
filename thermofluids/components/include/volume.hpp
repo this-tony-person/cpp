@@ -18,10 +18,8 @@ class CapacitiveVolume {
 	CapacitiveVolume(double capacitance);
 	 
 	/**
-	 * @brief Compute pressure state by integration
-	 * @param mdotA Mass inflow rate through port A (kg/s)
-	 * @param mdotB Mass inflow rate through port B (kg/s)
-	 * @param mdotC Mass inflow rate through port C (kg/s)
+	 * @brief Compute pressure state derivative
+	 * @param netMdot Total mass inflow rate through all ports (kg/s)
 	 */
-	double computePressureStateDerivative(double mdotA, double mdotB, double mdotC) const;
+	double computePressureStateDerivative(double netMdot) const;
 };

@@ -6,4 +6,6 @@ class BoundaryCondition {
 	 */
 	public:
 		double pressure; 
+		
+		BoundaryCondition(double p);
 };

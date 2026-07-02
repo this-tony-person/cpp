@@ -23,9 +23,6 @@ int main() {
 		p.push_back(volume.pressure);
 	}
 	
-	
-	// = {lox.volumes.at("J1").pressure};
-	
 	// Configure ODE solver
 	double t = 0.0;
 	double tStop = 10.0;
@@ -35,28 +32,33 @@ int main() {
 	
 	// Configure I/O logging
 	std::ofstream outfile("output_test_lox_plant.csv");
-	outfile << "Time,pJunction,pBC1,pBC2";
+	outfile << "Time";
+	for (const auto& [name,volume] : lox.volumes) {
+		outfile << "," << "p_" << name;
+	}
+	for (const auto& [name,boundary] : lox.boundaries) {
+		outfile << "," << "p_" << name;
+	}
 	for (const auto& [name,pipe] : lox.pipes) {
 		outfile << "," << "mdot_" << name;
 	}
 	outfile << "\n";
 	
-	// Get connectivity data
-	const auto& PO0001_connections = lox.getConnectivity().at("PO0001");
-	const auto& PO0002_connections = lox.getConnectivity().at("PO0002");
-	
 	// Execute integration loop
 	while (t<tStop) {
 		
 		// Log current state
-		outfile << t << "," << p[0] << "," << lox.boundaries.at("BC1").pressure << "," << lox.boundaries.at("BC2").pressure;
-		
+		outfile << t;
+		for (const auto& [name,volume] : lox.volumes) {
+			outfile << "," << volume.pressure;
+		}
+		for (const auto& [name,boundary] : lox.boundaries) {
+			outfile << "," << boundary.pressure;
+		}
 		for (const auto& [name, pipe] : lox.pipes) {
 			const auto& pipeConnections = lox.getConnectivity().at(name); // Pipe connections	
-					
 			std::string connA = pipeConnections.at("A").name; // Port-A neighbor
 			std::string connB = pipeConnections.at("B").name; // port-B neighbor
-			
 			double mdot = lox.getPipeMdot(name,lox.getPressure(connA),lox.getPressure(connB));
 			outfile << "," << mdot;
 		}

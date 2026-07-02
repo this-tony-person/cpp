@@ -20,9 +20,9 @@ def run_test(cpp_executable):
 	fig, (ax1,ax2) = plt.subplots(2,1,figsize=(10,8),sharex=True)
 	
 	# Subplot 1: pressures
-	ax1.plot(df['Time'],df['pJunction'],label='Junction Pressure')
-	ax1.plot(df['Time'],df['pBC1'],'--',label='Pressure BC 1')
-	ax1.plot(df['Time'],df['pBC2'],'--',label='Pressure BC 2')
+	ax1.plot(df['Time'],df['p_J1'],label='Junction Pressure')
+	ax1.plot(df['Time'],df['p_BC1'],'--',label='Pressure BC 1')
+	ax1.plot(df['Time'],df['p_BC2'],'--',label='Pressure BC 2')
 	ax1.set_xlabel('Time (s)')
 	ax1.set_ylabel('Pressure (bar)')
 	ax1.legend()

@@ -39,7 +39,7 @@ LOxPlant::LOxPlant(const LOxPlantParams& params, const std::string& connectivity
 		this->connectivity = ConnectivityLoader::loadFromFile(connectivityFilePath);
 }
 
-void LOxPlant::computeStateDerivatives(const std::vector<double>& x, std::vector<double>& dxdt, double t) {
+void LOxPlant::computeStateDerivatives(const std::vector<double>& x, std::vector<double>& dxdt, double /*t*/) {
 	// Update volume pressure states
 	int i = 0;
 	for (auto& [volName, volume] : volumes) {
